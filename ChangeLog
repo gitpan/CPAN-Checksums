@@ -1,3 +1,13 @@
+2005-01-24  Andreas Koenig  <andk@cpan.org>
+
+	* Checksums.pm (makehashref): guarantee that a hashref is
+	produced, and not a 0 (as could happen for empty CHECKSUMS files)
+
+2005-01-23  Andreas Koenig  <andk@cpan.org>
+
+	* Checksums.pm: Introducing $MIN_MTIME_CHECKSUMS and
+	$IGNORE_MATCH. Should be fully backwards compatible.
+
 2003-02-03  Andreas J. Koenig  <andreas.koenig@anima.de>
 
 	* Checking the return value of close and falling back to normal

@@ -3,17 +3,20 @@ package CPAN::Checksums;
 use strict;
 use vars qw($VERSION $CAUTION $TRY_SHORTNAME
             $SIGNING_PROGRAM $SIGNING_KEY
+            $MIN_MTIME_CHECKSUMS $IGNORE_MATCH
             @ISA @EXPORT_OK);
 
 require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.16 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.18 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 $SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
 $SIGNING_KEY ||= '';
+$MIN_MTIME_CHECKSUMS ||= 0;
+$IGNORE_MATCH = qr{(?i-xsm:readme$)};
 
 use DirHandle ();
 use IO::File ();
@@ -33,7 +36,7 @@ sub updatedir ($) {
  DIRENT: for my $de ($dh->read) {
     next if $de =~ /^\./;
     next if substr($de,0,9) eq "CHECKSUMS";
-    next if $de =~ /readme$/i;
+    next if $IGNORE_MATCH && $de =~ $IGNORE_MATCH;
 
     my $abs = File::Spec->catfile($dirname,$de);
 
@@ -117,8 +120,8 @@ sub updatedir ($) {
     } # ! -d
   }
   $dh->close;
-  my $ckfn = File::Spec->catfile($dirname, "CHECKSUMS");
-  unless (%$dref) {
+  my $ckfn = File::Spec->catfile($dirname, "CHECKSUMS"); # checksum-file-name
+  unless (%$dref) { # no files to checksum
     unlink $ckfn or die "Couldn't unlink $ckfn: $!" if -f $ckfn;
     return 1;
   }
@@ -126,6 +129,7 @@ sub updatedir ($) {
   local $Data::Dumper::Quotekeys = 1;
   my $ddump = Data::Dumper->new([$dref],["cksum"])->Dump;
   my $is_signed = 0;
+  my @ckfnstat = stat $ckfn;
   if ($fh->open($ckfn)) {
     my $cksum = "";
     local $/ = "\n";
@@ -136,8 +140,11 @@ sub updatedir ($) {
     }
     close $fh;
     if ( !!$SIGNING_KEY == !!$is_signed ) { # either both or neither
-      return 1 if $cksum eq $ddump;
-      return 1 if ckcmp($cksum,$dref);
+      if (!$MIN_MTIME_CHECKSUMS || $ckfnstat[9] > $MIN_MTIME_CHECKSUMS ) {
+        # recent enough
+        return 1 if $cksum eq $ddump;
+        return 1 if ckcmp($cksum,$dref);
+      }
     }
     if ($CAUTION) {
       my $report = investigate($cksum,$dref);
@@ -210,7 +217,7 @@ sub makehashref ($) {
     require Safe;
     my($comp) = Safe->new("CPAN::Checksums::reval");
     my $cksum; # used by Data::Dumper
-    $_ = $comp->reval($_);
+    $_ = $comp->reval($_) || {};
     die "Caught $@" if $@;
   }
   $_;
@@ -243,12 +250,27 @@ updatedir takes a directory name as argument and writes a typical
 CHECKSUMS file in that directory as used on CPAN unless a previously
 written CHECKSUMS file is there that is still valid. Returns 2 if a
 new CHECKSUMS file has been written, 1 if a valid CHECKSUMS file is
-already there, otherwise dies. Please note, that CPAN CHECKSUMS files
-ignore filenames matching C</readme$/i>.
+already there, otherwise dies.
+
+=head2 Global Variables in package CPAN::Checksums
+
+=over
+
+=item $IGNORE_MATCH
+
+If the global variable $IGNORE_MATCH is set, the all files matching
+this expression will be completely ignored and will not be included in
+the CPAN CHECKSUMS files. Per default this variable is set to
+
+    qr{(?i-xsm:readme$)}
+
+=item $CAUTION
 
 Setting the global variable $CAUTION causes updatedir() to report
 changes of files in the attributes C<size>, C<mtime>, C<md5>, or
 C<md5-ungz> to STDERR.
+
+=item $TRY_SHORTNAME
 
 By setting the global variable $TRY_SHORTNAME to a true value, you can
 tell updatedir() to include an attribute C<shortname> in the resulting
@@ -256,6 +278,8 @@ hash that is 8.3-compatible. Please note, that updatedir() in this
 case may be slow and may even fail on large directories, because it
 will always only try 1000 iterations to find a name that is not yet
 taken and then give up.
+
+=item $SIGNING_KEY
 
 Setting the global variable $SIGNING_KEY makes the generated CHECKSUMS
 file to be clear-signed by the command specified in $SIGNING_PROGRAM
@@ -278,6 +302,14 @@ key as an extra argument.  The resulting CHECKSUMS file should look like:
 
 note that the actual data remains intact, but two extra lines are
 added to make it legal for both OpenPGP and perl syntax.
+
+=item $MIN_MTIME_CHECKSUMS
+
+If the global variable $MIN_MTIME_CHECKSUMS is set, then updatedir
+will renew signatures on checksum files that have an older mtime than
+the given value.
+
+=back
 
 =head1 PREREQUISITES
 

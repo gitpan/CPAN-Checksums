@@ -17,41 +17,57 @@ DESCRIPTION
     CHECKSUMS file in that directory as used on CPAN unless a previously
     written CHECKSUMS file is there that is still valid. Returns 2 if a new
     CHECKSUMS file has been written, 1 if a valid CHECKSUMS file is already
-    there, otherwise dies. Please note, that CPAN CHECKSUMS files ignore
-    filenames matching "/readme$/i".
+    there, otherwise dies.
 
-    Setting the global variable $CAUTION causes updatedir() to report
-    changes of files in the attributes "size", "mtime", "md5", or "md5-ungz"
-    to STDERR.
+  Global Variables in package CPAN::Checksums
+    $IGNORE_MATCH
+        If the global variable $IGNORE_MATCH is set, the all files matching
+        this expression will be completely ignored and will not be included
+        in the CPAN CHECKSUMS files. Per default this variable is set to
 
-    By setting the global variable $TRY_SHORTNAME to a true value, you can
-    tell updatedir() to include an attribute "shortname" in the resulting
-    hash that is 8.3-compatible. Please note, that updatedir() in this case
-    may be slow and may even fail on large directories, because it will
-    always only try 1000 iterations to find a name that is not yet taken and
-    then give up.
+            qr{(?i-xsm:readme$)}
 
-    Setting the global variable $SIGNING_KEY makes the generated CHECKSUMS
-    file to be clear-signed by the command specified in $SIGNING_PROGRAM
-    (defaults to "gpg --clearsign --default-key "), passing the signing key
-    as an extra argument. The resulting CHECKSUMS file should look like:
+    $CAUTION
+        Setting the global variable $CAUTION causes updatedir() to report
+        changes of files in the attributes "size", "mtime", "md5", or
+        "md5-ungz" to STDERR.
 
-        0&&<<''; # this PGP-signed message is also valid perl
-        -----BEGIN PGP SIGNED MESSAGE-----
-        Hash: SHA1
+    $TRY_SHORTNAME
+        By setting the global variable $TRY_SHORTNAME to a true value, you
+        can tell updatedir() to include an attribute "shortname" in the
+        resulting hash that is 8.3-compatible. Please note, that updatedir()
+        in this case may be slow and may even fail on large directories,
+        because it will always only try 1000 iterations to find a name that
+        is not yet taken and then give up.
 
-        # CHECKSUMS file written on ... by CPAN::Checksums (v...)
-        $cksum = {
+    $SIGNING_KEY
+        Setting the global variable $SIGNING_KEY makes the generated
+        CHECKSUMS file to be clear-signed by the command specified in
+        $SIGNING_PROGRAM (defaults to "gpg --clearsign --default-key "),
+        passing the signing key as an extra argument. The resulting
+        CHECKSUMS file should look like:
+
+            0&&<<''; # this PGP-signed message is also valid perl
+            -----BEGIN PGP SIGNED MESSAGE-----
+            Hash: SHA1
+
+            # CHECKSUMS file written on ... by CPAN::Checksums (v...)
+            $cksum = {
+                ...
+            };
+
+            __END__
+            -----BEGIN PGP SIGNATURE-----
             ...
-        };
+            -----END PGP SIGNATURE-----
 
-        __END__
-        -----BEGIN PGP SIGNATURE-----
-        ...
-        -----END PGP SIGNATURE-----
+        note that the actual data remains intact, but two extra lines are
+        added to make it legal for both OpenPGP and perl syntax.
 
-    note that the actual data remains intact, but two extra lines are added
-    to make it legal for both OpenPGP and perl syntax.
+    $MIN_MTIME_CHECKSUMS
+        If the global variable $MIN_MTIME_CHECKSUMS is set, then updatedir
+        will renew signatures on checksum files that have an older mtime
+        than the given value.
 
 PREREQUISITES
     DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,

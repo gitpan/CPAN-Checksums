@@ -1,4 +1,4 @@
-# CHECKSUMS file written on Mon Feb  3 19:20:36 2003 by CPAN::Checksums (v1.016)
+# CHECKSUMS file written on Sun Jan 23 18:23:20 2005 by CPAN::Checksums (v1.016)
 $cksum = {
   'RCS' => {
     'isdir' => 1
@@ -15,7 +15,7 @@ $cksum = {
     'size' => '1375'
   },
   '43' => {
-    'mtime' => '2003-02-03',
+    'mtime' => '2005-01-23',
     'md5' => 'f0287f33eba7192e2a9c6a14f829aa1a',
     'size' => '3'
   }

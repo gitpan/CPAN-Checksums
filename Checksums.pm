@@ -1,14 +1,13 @@
 package CPAN::Checksums;
 
 use strict;
-use vars qw($VERSION $REVISION $CAUTION $TRY_SHORTNAME @ISA @EXPORT_OK);
+use vars qw($VERSION $CAUTION $TRY_SHORTNAME @ISA @EXPORT_OK);
 
 require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$REVISION = sprintf "%d.%03d", q$Revision: 1.10 $ =~ /(\d+)\.(\d+)/;
-$VERSION = "1.0";
+$VERSION = sprintf "%d.%03d", q$Revision: 1.11 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 
@@ -215,10 +214,12 @@ $TRY_SHORTNAME to a true value.
 
 =head1 DESCRIPTION
 
-updatedir takes a directory name as argument and writes a CHECKSUMS
-file in that directory unless a previously written CHECKSUMS file is
-there that is still valid. Returns 2 if a new CHECKSUMS file has been
-written, 1 if a valid CHECKSUMS file is already there, otherwise dies.
+updatedir takes a directory name as argument and writes a typical
+CHECKSUMS file in that directory as used on CPAN unless a previously
+written CHECKSUMS file is there that is still valid. Returns 2 if a
+new CHECKSUMS file has been written, 1 if a valid CHECKSUMS file is
+already there, otherwise dies. Please note, that CPAN CHECKSUMS files
+ignore filenames matching C</readme$/i>.
 
 Setting the global variable $CAUTION causes updatedir() to report
 changes of files in the attributes C<size>, C<mtime>, C<md5>, or

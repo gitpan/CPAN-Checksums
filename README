@@ -13,10 +13,12 @@ INCOMPATIBILITY ALERT
     true value.
 
 DESCRIPTION
-    updatedir takes a directory name as argument and writes a CHECKSUMS file
-    in that directory unless a previously written CHECKSUMS file is there
-    that is still valid. Returns 2 if a new CHECKSUMS file has been written,
-    1 if a valid CHECKSUMS file is already there, otherwise dies.
+    updatedir takes a directory name as argument and writes a typical
+    CHECKSUMS file in that directory as used on CPAN unless a previously
+    written CHECKSUMS file is there that is still valid. Returns 2 if a new
+    CHECKSUMS file has been written, 1 if a valid CHECKSUMS file is already
+    there, otherwise dies. Please note, that CPAN CHECKSUMS files ignore
+    filenames matching "/readme$/i".
 
     Setting the global variable $CAUTION causes updatedir() to report
     changes of files in the attributes "size", "mtime", "md5", or "md5-ungz"

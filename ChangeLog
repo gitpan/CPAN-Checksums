@@ -1,5 +1,7 @@
 2000-12-11  Andreas J. Koenig  <andreas.koenig@anima.de>
 
+	* Delete CHECKSUMS if directory is empty. 
+
 	* Skip symlinks. Symlinks are considered inappropriate in CPAN
 	author directories. They violate the principle of a one to one
 	relationship between filename and file.

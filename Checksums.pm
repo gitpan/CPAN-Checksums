@@ -7,7 +7,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.6 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.7 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 
 use DirHandle ();
@@ -104,6 +104,10 @@ sub updatedir ($) {
   }
   $dh->close;
   my $ckfn = File::Spec->catfile($dirname, "CHECKSUMS");
+  unless (%$dref) {
+    unlink $ckfn or die "Couldn't unlink $ckfn: $!" if -f $ckfn;
+    return;
+  }
   local $Data::Dumper::Indent = 1;
   local $Data::Dumper::Quotekeys = 1;
   my $ddump = Data::Dumper->new([$dref],["cksum"])->Dump;

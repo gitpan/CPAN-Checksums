@@ -1,15 +1,19 @@
 package CPAN::Checksums;
 
 use strict;
-use vars qw($VERSION $CAUTION $TRY_SHORTNAME @ISA @EXPORT_OK);
+use vars qw($VERSION $CAUTION $TRY_SHORTNAME
+            $SIGNING_PROGRAM $SIGNING_KEY
+            @ISA @EXPORT_OK);
 
 require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.11 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.14 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
+$SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
+$SIGNING_KEY ||= '';
 
 use DirHandle ();
 use IO::File ();
@@ -79,7 +83,7 @@ sub updatedir ($) {
       # Symlinks are a mess on a replicated, database driven system,
       # but as they are not forbidden, we cannot ignore them. We do
       # have a directory with nothing but a symlink in it. When we
-      # ignored the symlink, we did not write a CHEKSUMS file and
+      # ignored the symlink, we did not write a CHECKSUMS file and
       # CPAN.pm issued lots of warnings:-(
       $dref->{$de}{issymlink} = 1;
     }
@@ -121,16 +125,20 @@ sub updatedir ($) {
   local $Data::Dumper::Indent = 1;
   local $Data::Dumper::Quotekeys = 1;
   my $ddump = Data::Dumper->new([$dref],["cksum"])->Dump;
+  my $is_signed = 0;
   if ($fh->open($ckfn)) {
     my $cksum = "";
     local $/ = "\n";
     while (<$fh>) {
       next if /^\#/;
+      $is_signed = 1 if /SIGNED MESSAGE/;
       $cksum .= $_;
     }
     close $fh;
-    return 1 if $cksum eq $ddump;
-    return 1 if ckcmp($cksum,$dref);
+    if ( !$SIGNING_KEY ^ !!$is_signed ) { # either both or neither
+      return 1 if $cksum eq $ddump;
+      return 1 if ckcmp($cksum,$dref);
+    }
     if ($CAUTION) {
       my $report = investigate($cksum,$dref);
       warn $report if $report;
@@ -138,6 +146,15 @@ sub updatedir ($) {
   }
   chmod 0644, $ckfn or die "Couldn't chmod to 0644 for $ckfn\: $!" if -f $ckfn;
   open $fh, ">$ckfn\0" or die "Couldn't open >$ckfn\: $!";
+
+  local $\;
+  if ($SIGNING_KEY) {
+    print $fh "0&&<<''; # this PGP-signed message is also valid perl\n";
+    close $fh;
+    open $fh, "| $SIGNING_PROGRAM $SIGNING_KEY >> $ckfn" or die "Could not call gpg: $!";
+    $ddump .= "__END__\n";
+  }
+
   printf $fh "# CHECKSUMS file written on %s by CPAN::Checksums (v%s)\n%s",
       scalar gmtime, $VERSION, $ddump;
   close $fh;
@@ -232,6 +249,28 @@ case may be slow and may even fail on large directories, because it
 will always only try 1000 iterations to find a name that is not yet
 taken and then give up.
 
+Setting the global variable $SIGNING_KEY makes the generated CHECKSUMS
+file to be clear-signed by the command specified in $SIGNING_PROGRAM
+(defaults to C<gpg --clearsign --default-key >), passing the signing
+key as an extra argument.  The resulting CHECKSUMS file should look like:
+
+    0&&<<''; # this PGP-signed message is also valid perl
+    -----BEGIN PGP SIGNED MESSAGE-----
+    Hash: SHA1
+
+    # CHECKSUMS file written on ... by CPAN::Checksums (v...)
+    $cksum = {
+	...
+    };
+
+    __END__
+    -----BEGIN PGP SIGNATURE-----
+    ...
+    -----END PGP SIGNATURE-----
+
+note that the actual data remains intact, but two extra lines are
+added to make it legal for both OpenPGP and perl syntax.
+
 =head1 PREREQUISITES
 
 DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
@@ -239,7 +278,7 @@ Data::Dumper, Data::Compare
 
 =head1 AUTHOR
 
-Andreas Koenig, andreas.koenig@anima.de
+Andreas Koenig, andreas.koenig@anima.de; GnuPG support by Autrijus Tang
 
 =head1 SEE ALSO
 

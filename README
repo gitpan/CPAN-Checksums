@@ -31,12 +31,34 @@ DESCRIPTION
     always only try 1000 iterations to find a name that is not yet taken and
     then give up.
 
+    Setting the global variable $SIGNING_KEY makes the generated CHECKSUMS
+    file to be clear-signed by the command specified in $SIGNING_PROGRAM
+    (defaults to "gpg --clearsign --default-key "), passing the signing key
+    as an extra argument. The resulting CHECKSUMS file should look like:
+
+        0&&<<''; # this PGP-signed message is also valid perl
+        -----BEGIN PGP SIGNED MESSAGE-----
+        Hash: SHA1
+
+        # CHECKSUMS file written on ... by CPAN::Checksums (v...)
+        $cksum = {
+            ...
+        };
+
+        __END__
+        -----BEGIN PGP SIGNATURE-----
+        ...
+        -----END PGP SIGNATURE-----
+
+    note that the actual data remains intact, but two extra lines are added
+    to make it legal for both OpenPGP and perl syntax.
+
 PREREQUISITES
     DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
     Data::Dumper, Data::Compare
 
 AUTHOR
-    Andreas Koenig, andreas.koenig@anima.de
+    Andreas Koenig, andreas.koenig@anima.de; GnuPG support by Autrijus Tang
 
 SEE ALSO
     perl(1).

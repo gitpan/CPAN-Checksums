@@ -7,7 +7,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.8 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.9 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 
 use DirHandle ();
@@ -183,7 +183,6 @@ sub makehashref ($) {
 
 1;
 __END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 
@@ -204,6 +203,11 @@ written, 1 if a valid CHECKSUMS file is already there, otherwise dies.
 Setting the global variable $CAUTION causes updatedir to report
 changes of files in the attributes C<size>, C<mtime>, C<md5>, or
 C<md5-ungz> to STDERR.
+
+=head1 PREREQUISITES
+
+DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
+Data::Dumper, Data::Compare
 
 =head1 AUTHOR
 

@@ -1,3 +1,8 @@
+2002-03-31  Andreas J. Koenig  <andreas.koenig@anima.de>
+
+	* drieux at wetware.com reports that the manpage is missing a
+	prerequisites section. Added now.
+
 2000-12-13  Andreas J. Koenig  <andreas.koenig@anima.de>
 
 	* Return 1 after deleting CHECKSUMS in an empty (or otherwise not

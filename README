@@ -15,6 +15,10 @@ DESCRIPTION
     of files in the attributes "size", "mtime", "md5", or "md5-ungz" to
     STDERR.
 
+PREREQUISITES
+    DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
+    Data::Dumper, Data::Compare
+
 AUTHOR
     Andreas Koenig, andreas.koenig@anima.de
 

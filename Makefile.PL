@@ -10,7 +10,6 @@ WriteMakefile(
                     'IO::File' => 0,
                     'Digest::MD5' => 0,
                     'Compress::Zlib' => 0,
-                    'File::Spec' => 0,
                     'Data::Dumper' => 0,
                     'Data::Compare' => 0,
                    },

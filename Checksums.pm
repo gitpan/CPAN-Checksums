@@ -1,14 +1,14 @@
 package CPAN::Checksums;
 
 use strict;
-use vars qw($VERSION $VERBOSE @ISA @EXPORT_OK);
+use vars qw($VERSION $CAUTION @ISA @EXPORT_OK);
 
 require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.4 $ =~ /(\d+)\.(\d+)/;
-$VERBOSE = 0;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.6 $ =~ /(\d+)\.(\d+)/;
+$CAUTION ||= 0;
 
 use DirHandle ();
 use IO::File ();
@@ -117,11 +117,9 @@ sub updatedir ($) {
     close $fh;
     return 1 if $cksum eq $ddump;
     return 1 if ckcmp($cksum,$dref);
-    if ($VERBOSE) {
-      require Algorithm::Diff;
-      for my $d (Algorithm::Diff::diff([split /\n/, $cksum],[split /\n/, $ddump])) {
-        print Data::Dumper::Dumper($d);
-      }
+    if ($CAUTION) {
+      my $report = investigate($cksum,$dref);
+      warn $report if $report;
     }
   }
   chmod 0644, $ckfn or die "Couldn't chmod to 0644 for $ckfn\: $!" if -f $ckfn;
@@ -135,17 +133,48 @@ sub updatedir ($) {
 
 sub ckcmp ($$) {
   my($old,$new) = @_;
-  my $diff = "";
   for ($old,$new) {
-    unless (ref $_ eq "HASH") {
-      require Safe;
-      my($comp) = Safe->new("CPAN::Checksums::reval");
-      my $cksum; # used by Data::Dumper
-      $_ = $comp->reval($_);
-      die "Caught $@" if $@;
-    }
+    $_ = makehashref($_);
   }
   Data::Compare::Compare($old,$new);
+}
+
+# see if a file changed but the name not
+sub investigate ($$) {
+  my($old,$new) = @_;
+  for ($old,$new) {
+    $_ = makehashref($_);
+  }
+  my $complain = "";
+  for my $dist (sort keys %$new) {
+    if (exists $old->{$dist}) {
+      my $headersaid;
+      for my $diff (qw/md5 size md5-ungz mtime/) {
+        next unless exists $old->{$dist}{$diff} &&
+            exists $new->{$dist}{$diff};
+        next if $old->{$dist}{$diff} eq $new->{$dist}{$diff};
+        $complain .=
+            scalar localtime().
+                ":\ndiffering old/new version of same file $dist:\n"
+                    unless $headersaid++;
+        $complain .=
+            qq{\t$diff "$old->{$dist}{$diff}" -> "$new->{$dist}{$diff}"\n}; #};
+      }
+    }
+  }
+  $complain;
+}
+
+sub makehashref ($) {
+  local($_) = shift;
+  unless (ref $_ eq "HASH") {
+    require Safe;
+    my($comp) = Safe->new("CPAN::Checksums::reval");
+    my $cksum; # used by Data::Dumper
+    $_ = $comp->reval($_);
+    die "Caught $@" if $@;
+  }
+  $_;
 }
 
 1;
@@ -167,6 +196,10 @@ updatedir takes a directory name as argument and writes a CHECKSUMS
 file in that directory unless a previously written CHECKSUMS file is
 there that is still valid. Returns 2 if a new CHECKSUMS file has been
 written, 1 if a valid CHECKSUMS file is already there, otherwise dies.
+
+Setting the global variable $CAUTION causes updatedir to report
+changes of files in the attributes C<size>, C<mtime>, C<md5>, or
+C<md5-ungz> to STDERR.
 
 =head1 AUTHOR
 

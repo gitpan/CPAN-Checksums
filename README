@@ -11,6 +11,10 @@ DESCRIPTION
     that is still valid. Returns 2 if a new CHECKSUMS file has been written,
     1 if a valid CHECKSUMS file is already there, otherwise dies.
 
+    Setting the global variable $CAUTION causes updatedir to report changes
+    of files in the attributes "size", "mtime", "md5", or "md5-ungz" to
+    STDERR.
+
 AUTHOR
     Andreas Koenig, andreas.koenig@anima.de
 

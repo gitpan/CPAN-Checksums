@@ -1,4 +1,4 @@
-# CHECKSUMS file written on Mon Dec 11 13:36:12 2000 by CPAN::Checksums (v1.007)
+# CHECKSUMS file written on Wed Dec 13 11:22:01 2000 by CPAN::Checksums (v1.008)
 $cksum = {
   '42.gz' => {
     'md5-ungz' => '50a2fabfdd276f573ff97ace8b11c5f4',
@@ -8,7 +8,7 @@ $cksum = {
     'size' => '26'
   },
   '43' => {
-    'mtime' => '2000-12-11',
+    'mtime' => '2000-12-13',
     'md5' => 'f0287f33eba7192e2a9c6a14f829aa1a',
     'shortname' => '430.43',
     'size' => '3'

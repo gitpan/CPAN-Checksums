@@ -1,3 +1,8 @@
+2000-12-13  Andreas J. Koenig  <andreas.koenig@anima.de>
+
+	* Return 1 after deleting CHECKSUMS in an empty (or otherwise not
+	indexed) directory. We used to return without argument.
+
 2000-12-11  Andreas J. Koenig  <andreas.koenig@anima.de>
 
 	* Delete CHECKSUMS if directory is empty. 

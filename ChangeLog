@@ -1,7 +1,10 @@
 2003-02-03  Andreas J. Koenig  <andreas.koenig@anima.de>
 
-	* Checking the return value of close and fallign back to normal
-	append mode if it isn't success.
+	* Checking the return value of close and falling back to normal
+	mode if it isn't success.
+
+	* The released version 1.15 stupidly left in the fallback case the
+	C< 0&&<<''; > in the resulting file. Version 1.16 corrected this.
 
 2003-02-02  Andreas J. Koenig  <andreas.koenig@anima.de>
 

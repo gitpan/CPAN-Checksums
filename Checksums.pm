@@ -9,7 +9,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.15 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.16 $ =~ /(\d+)\.(\d+)/;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 $SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
@@ -155,16 +155,16 @@ sub updatedir ($) {
     $ddump .= "__END__\n";
   }
 
-  printf $fh "# CHECKSUMS file written on %s by CPAN::Checksums (v%s)\n%s",
+  my $message = sprintf "# CHECKSUMS file written on %s by CPAN::Checksums (v%s)\n%s",
       scalar gmtime, $VERSION, $ddump;
+  print $fh $message;
   my $success = close $fh;
   if ($SIGNING_KEY && !$success) {
     warn "Couldn't run '$SIGNING_PROGRAM $SIGNING_KEY'!
-Falling back to ordinary append mode.";
-    open $fh, ">>$ckfn\0" or die "Couldn't open >>$ckfn\: $!";
-    printf $fh "# CHECKSUMS file written on %s by CPAN::Checksums (v%s)\n%s",
-        scalar gmtime, $VERSION, $ddump;
-    close $fh or warn "Couldn't close $ckfn in append mode: $!";
+Writing to $ckfn directly";
+    open $fh, ">$ckfn\0" or die "Couldn't open >$ckfn\: $!";
+    print $fh $message;
+    close $fh or warn "Couldn't close $ckfn: $!";
   }
   chmod 0444, $ckfn or die "Couldn't chmod to 0444 for $ckfn\: $!";
   return 2;

@@ -1,3 +1,8 @@
+2003-02-03  Andreas J. Koenig  <andreas.koenig@anima.de>
+
+	* Checking the return value of close and fallign back to normal
+	append mode if it isn't success.
+
 2003-02-02  Andreas J. Koenig  <andreas.koenig@anima.de>
 
 	* Added optional GnuPG signing of CHECKSUMS files. Courtesy

@@ -7,7 +7,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.3 $ =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%03d", q$Revision: 1.4 $ =~ /(\d+)\.(\d+)/;
 $VERBOSE = 0;
 
 use DirHandle ();
@@ -29,6 +29,9 @@ sub updatedir ($) {
     next if $de =~ /^\./;
     next if substr($de,0,9) eq "CHECKSUMS";
     next if $de =~ /readme$/i;
+
+    my $abs = File::Spec->catfile($dirname,$de);
+    next if -l $abs;
 
     #
     # SHORTNAME offers an 8.3 name, probably not needed but it was
@@ -73,7 +76,6 @@ sub updatedir ($) {
     if (-d File::Spec->catdir($dirname,$de)){
       $dref->{$de}{isdir} = 1;
     } else {
-      my $abs = File::Spec->catfile($dirname,$de);
       my @stat = stat $abs or next DIRENT;
       $dref->{$de}{size} = $stat[7];
       my(@gmtime) = gmtime $stat[9];

@@ -1,3 +1,16 @@
+2002-10-06  Andreas J. Koenig  <andreas.koenig@anima.de>
+
+	* Turn off the generation of 8.3 filenames per default, keep it
+	accessible with a global. Discourage its use.
+
+2002-05-22  Andreas J. Koenig  <andreas.koenig@anima.de>
+
+	* Do not ignore symlinks anymore. Ignoring them is not the right
+	policy: either forbid or list them in the CHECKSUMS file. Up to
+	now a directory that contained only a symlink, remained without
+	CHECKSUMS file, which is stupid and makes (unstoppable) noise in
+	CPAN.pm.
+
 2002-03-31  Andreas J. Koenig  <andreas.koenig@anima.de>
 
 	* drieux at wetware.com reports that the manpage is missing a

@@ -1,0 +1,19 @@
+NAME
+    CPAN::Checksums - Write a CHECKSUMS file for a directory as on CPAN
+
+SYNOPSIS
+      use CPAN::Checksums qw(updatedir);
+      my $success = updatedir($directory);
+
+DESCRIPTION
+    updatedir takes a directory name as argument and writes a CHECKSUMS file
+    in that directory unless a previously written CHECKSUMS file is there
+    that is still valid. Returns 2 if a new CHECKSUMS file has been written,
+    1 if a valid CHECKSUMS file is already there, otherwise dies.
+
+AUTHOR
+    Andreas Koenig, andreas.koenig@anima.de
+
+SEE ALSO
+    perl(1).
+

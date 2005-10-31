@@ -1,10 +1,12 @@
-ChangeLog
+ChangeLog.svn
+ChangeLog.old
 Checksums.pm
 MANIFEST
 Makefile.PL
 README
 t/42.gz
 t/43
-t/RCS/43,v
 t/CHECKSUMS
 t/updatedir.t
+META.yml                                 Module meta-data (added by MakeMaker)
+SIGNATURE                                Public-key signature (added by MakeMaker)

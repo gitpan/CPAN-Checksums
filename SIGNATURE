@@ -1,0 +1,34 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.50.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 2225c12a8792f2e6c3e52f5ce451766817f803ca ChangeLog.old
+SHA1 5b34d38e6fe71d124a534fd7fe63eb698f216db8 ChangeLog.svn
+SHA1 7ee3a988d86094763c10b0325a64681556b72901 Checksums.pm
+SHA1 04df7e9d60d533e366337360bdd643e4854607ac MANIFEST
+SHA1 8bbd5fc019a4c54cd4598cbc898d5655f6c903df META.yml
+SHA1 daa1c133fdddfccb8d1fc57218f0ef9f7641bbdc Makefile.PL
+SHA1 ccd609a8075a82b4f3b21f1ca2b12ec68cdd2b68 README
+SHA1 51e1c061bc02e9a38948a5d8e3ca7352830f0fac t/42.gz
+SHA1 23e182506f4b883d8aae3d29d08e044c55b04deb t/43
+SHA1 ea51f7dde170df3fadae1dac411fbc3c2610e298 t/CHECKSUMS
+SHA1 4601e200ed665fb53cb5575999f6553858c308ce t/updatedir.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQFDZcVX7IA58KMXwV0RAqi8AJ9hVE0Cgkq4gCNmPwxGsaUMxjic0wCdF6/n
+/hgYRp1PcVX7ytgnj748y0o=
+=sQgO
+-----END PGP SIGNATURE-----

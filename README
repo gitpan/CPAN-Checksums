@@ -21,7 +21,7 @@ DESCRIPTION
 
   Global Variables in package CPAN::Checksums
     $IGNORE_MATCH
-        If the global variable $IGNORE_MATCH is set, the all files matching
+        If the global variable $IGNORE_MATCH is set, then all files matching
         this expression will be completely ignored and will not be included
         in the CPAN CHECKSUMS files. Per default this variable is set to
 
@@ -70,8 +70,8 @@ DESCRIPTION
         than the given value.
 
 PREREQUISITES
-    DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
-    Data::Dumper, Data::Compare
+    DirHandle, IO::File, Digest::MD5, Digest::SHA, Compress::Zlib,
+    File::Spec, Data::Dumper, Data::Compare
 
 AUTHOR
     Andreas Koenig, andreas.koenig@anima.de; GnuPG support by Autrijus Tang

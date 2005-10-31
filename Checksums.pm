@@ -10,7 +10,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-$VERSION = sprintf "%d.%03d", q$Revision: 1.18 $ =~ /(\d+)\.(\d+)/;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 32 $,4)/1000;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 $SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
@@ -21,10 +21,12 @@ $IGNORE_MATCH = qr{(?i-xsm:readme$)};
 use DirHandle ();
 use IO::File ();
 use Digest::MD5 ();
+use Compress::Bzip2();
 use Compress::Zlib ();
 use File::Spec ();
 use Data::Dumper ();
 use Data::Compare ();
+use Digest::SHA ();
 
 sub updatedir ($) {
   my($dirname) = @_;
@@ -100,23 +102,9 @@ sub updatedir ($) {
       $gmtime[5]+=1900;
       $dref->{$de}{mtime} = sprintf "%04d-%02d-%02d", @gmtime[5,4,3];
 
-      my $md5 = Digest::MD5->new;
-      $fh->open("$abs\0") or die "Couldn't open $abs: $!";
-      $md5->addfile($fh);
-      $fh->close;
-      my $digest = $md5->hexdigest;
-      $dref->{$de}{md5} = $digest;
-      $md5 = Digest::MD5->new;
-      if ($de =~ /\.gz$/) {
-        my($buffer, $gz);
-        if ($gz  = Compress::Zlib::gzopen($abs, "rb")) {
-          $md5->add($buffer)
-              while $gz->gzread($buffer) > 0;
-          # Error management?
-          $dref->{$de}{'md5-ungz'} = $md5->hexdigest;
-          $gz->gzclose;
-        }
-      }
+      add_digests($de,$dref,"Digest::MD5",[],"md5",$fh,$abs);
+      add_digests($de,$dref,"Digest::SHA",[256],"sha256",$fh,$abs);
+
     } # ! -d
   }
   $dh->close;
@@ -127,6 +115,7 @@ sub updatedir ($) {
   }
   local $Data::Dumper::Indent = 1;
   local $Data::Dumper::Quotekeys = 1;
+  local $Data::Dumper::Sortkeys = 1;
   my $ddump = Data::Dumper->new([$dref],["cksum"])->Dump;
   my $is_signed = 0;
   my @ckfnstat = stat $ckfn;
@@ -177,6 +166,34 @@ Writing to $ckfn directly";
   return 2;
 }
 
+sub add_digests ($$$$$$$) {
+  my($de,$dref,$module,$constructor_args,$keyname,$fh,$abs) = @_;
+  my $dig = $module->new(@$constructor_args);
+  $fh->open("$abs\0") or die "Couldn't open $abs: $!";
+  $dig->addfile($fh);
+  $fh->close;
+  my $digest = $dig->hexdigest;
+  $dref->{$de}{$keyname} = $digest;
+  $dig = $module->new(@$constructor_args);
+  if ($de =~ /\.gz$/) {
+    my($buffer, $zip);
+    if ($zip  = Compress::Zlib::gzopen($abs, "rb")) {
+      $dig->add($buffer)
+          while $zip->gzread($buffer) > 0;
+      $dref->{$de}{"$keyname-ungz"} = $dig->hexdigest;
+      $zip->gzclose;
+    }
+  } elsif ($de =~ /\.bz2$/) {
+    my($buffer, $zip);
+    if ($zip  = Compress::Bzip2::bzopen($abs, "rb")) {
+      $dig->add($buffer)
+          while $zip->bzread($buffer) > 0;
+      $dref->{$de}{"$keyname-unbz2"} = $dig->hexdigest;
+      $zip->bzclose;
+    }
+  }
+}
+
 sub ckcmp ($$) {
   my($old,$new) = @_;
   for ($old,$new) {
@@ -195,7 +212,7 @@ sub investigate ($$) {
   for my $dist (sort keys %$new) {
     if (exists $old->{$dist}) {
       my $headersaid;
-      for my $diff (qw/md5 size md5-ungz mtime/) {
+      for my $diff (qw/md5 sha256 size md5-ungz sha256-ungz mtime/) {
         next unless exists $old->{$dist}{$diff} &&
             exists $new->{$dist}{$diff};
         next if $old->{$dist}{$diff} eq $new->{$dist}{$diff};
@@ -258,7 +275,7 @@ already there, otherwise dies.
 
 =item $IGNORE_MATCH
 
-If the global variable $IGNORE_MATCH is set, the all files matching
+If the global variable $IGNORE_MATCH is set, then all files matching
 this expression will be completely ignored and will not be included in
 the CPAN CHECKSUMS files. Per default this variable is set to
 
@@ -313,7 +330,7 @@ the given value.
 
 =head1 PREREQUISITES
 
-DirHandle, IO::File, Digest::MD5, Compress::Zlib, File::Spec,
+DirHandle, IO::File, Digest::MD5, Digest::SHA, Compress::Zlib, File::Spec,
 Data::Dumper, Data::Compare
 
 =head1 AUTHOR

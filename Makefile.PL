@@ -1,6 +1,6 @@
 use ExtUtils::MakeMaker qw(:DEFAULT);
 my $Id = q$Id: Makefile.PL 3 2005-10-30 13:58:32Z k $;
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 31 $,4)/1000;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 38 $,4)/1000;
 
 my $version_diff = 0; # we'll have to die if this becomes true
 {
@@ -48,11 +48,12 @@ WriteMakefile(
               'VERSION_FROM' => 'Checksums.pm',
               (MM->can("signature_target") ? (SIGN => 1) : ()),
               'PREREQ_PM' => {
+                              'Compress::Bzip2' => 0,
                               'Compress::Zlib' => 0,
                               'Data::Compare' => 0,
                               'Data::Dumper' => 0,
                               'Digest::MD5' => 0,
-                              'Digest::SHA1' => 0,
+                              'Digest::SHA' => 0,
                               'DirHandle' => 0,
                               'File::Spec' => 0,
                               'IO::File' => 0,
@@ -82,6 +83,12 @@ README: Checksums.pm Makefile
 chlog ::
 	LC_ALL=en_GB.utf8 svn log -v -r `svnversion . | perl -ne '/(?:\d+:)?(\d+)[SM]*$$/&&print $$1'`:1 > ChangeLog.svn
 
+release ::
+	perl -I../../CPAN/SVN/release-lib -S release $(DISTVNAME).tar$(SUFFIX)
+
+sign:
+	cpansign -s
+
 }
 }
 
@@ -91,3 +98,15 @@ sub MY::dist_ci {
 };
 }
 
+sub MY::dist_test {
+  return q{
+# if we depend on $(DISTVNAME).tar$(SUFFIX), then the rest of the
+# Makefile breaks our intent to NOT remake dist
+disttest :
+	rm -rf $(DISTVNAME)
+	tar xvzf $(DISTVNAME).tar$(SUFFIX)
+	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL
+	cd $(DISTVNAME) && $(MAKE) $(PASTHRU)
+	cd $(DISTVNAME) && $(MAKE) test $(PASTHRU)
+}
+}

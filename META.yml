@@ -1,15 +1,16 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         CPAN-Checksums
-version:      1.032
+version:      1.039
 version_from: Checksums.pm
 installdirs:  site
 requires:
+    Compress::Bzip2:               0
     Compress::Zlib:                0
     Data::Compare:                 0
     Data::Dumper:                  0
     Digest::MD5:                   0
-    Digest::SHA1:                  0
+    Digest::SHA:                   0
     DirHandle:                     0
     File::Spec:                    0
     IO::File:                      0

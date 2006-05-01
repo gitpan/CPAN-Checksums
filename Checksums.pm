@@ -10,7 +10,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 39 $,4)/1000;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 48 $,4)/1000;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 $SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
@@ -128,6 +128,7 @@ sub updatedir ($) {
       $cksum .= $_;
     }
     close $fh;
+    local our $DIRNAME = $dirname;
     if ( !!$SIGNING_KEY == !!$is_signed ) { # either both or neither
       if (!$MIN_MTIME_CHECKSUMS || $ckfnstat[9] > $MIN_MTIME_CHECKSUMS ) {
         # recent enough
@@ -235,7 +236,8 @@ sub makehashref ($) {
     my($comp) = Safe->new("CPAN::Checksums::reval");
     my $cksum; # used by Data::Dumper
     $_ = $comp->reval($_) || {};
-    die "Caught $@" if $@;
+    our $DIRNAME;
+    die "CPAN::Checksums: Caught error[$@] while checking $DIRNAME" if $@;
   }
   $_;
 }

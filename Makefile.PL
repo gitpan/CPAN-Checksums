@@ -1,6 +1,6 @@
 use ExtUtils::MakeMaker qw(:DEFAULT);
 my $Id = q$Id: Makefile.PL 3 2005-10-30 13:58:32Z k $;
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 38 $,4)/1000;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 47 $,4)/1000;
 
 my $version_diff = 0; # we'll have to die if this becomes true
 {
@@ -78,7 +78,7 @@ setversion:
 	$(PERL) Makefile.PL --setversion
 
 README: Checksums.pm Makefile
-	pod2text Checksums.pm > $@
+	$(PERL) -MPod::Text -e 'Pod::Text->new->parse_from_file(\*ARGV)' Checksums.pm > $@
 
 chlog ::
 	LC_ALL=en_GB.utf8 svn log -v -r `svnversion . | perl -ne '/(?:\d+:)?(\d+)[SM]*$$/&&print $$1'`:1 > ChangeLog.svn

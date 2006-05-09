@@ -71,7 +71,12 @@ DESCRIPTION
 
 PREREQUISITES
     DirHandle, IO::File, Digest::MD5, Digest::SHA, Compress::Bzip2,
-    Compress::Zlib, File::Spec, Data::Dumper, Data::Compare
+    Compress::Zlib, File::Spec, Data::Dumper, Data::Compare, File::Temp
+
+BUGS
+    If updatedir is interrupted, it may leave a temporary file lying around.
+    These files have the File::Temp template CHECKSUMS.XXXX and should be
+    harvested by a cronjob.
 
 AUTHOR
     Andreas Koenig, andreas.koenig@anima.de; GnuPG support by Autrijus Tang

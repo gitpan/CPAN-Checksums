@@ -1,6 +1,6 @@
 use ExtUtils::MakeMaker qw(:DEFAULT);
 my $Id = q$Id: Makefile.PL 3 2005-10-30 13:58:32Z k $;
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 47 $,4)/1000;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 50 $,4)/1000;
 
 my $version_diff = 0; # we'll have to die if this becomes true
 {
@@ -56,6 +56,7 @@ WriteMakefile(
                               'Digest::SHA' => 0,
                               'DirHandle' => 0,
                               'File::Spec' => 0,
+                              'File::Temp' => 0,
                               'IO::File' => 0,
                              },
               'dist' => {

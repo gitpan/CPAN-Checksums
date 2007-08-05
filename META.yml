@@ -1,10 +1,11 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         CPAN-Checksums
-version:      1.050
-version_from: Checksums.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                CPAN-Checksums
+version:             1.061
+abstract:            ~
+license:             perl
+generated_by:        ExtUtils::MakeMaker version 6.36
+distribution_type:   module
+requires:     
     Compress::Bzip2:               0
     Compress::Zlib:                0
     Data::Compare:                 0
@@ -15,6 +16,6 @@ requires:
     File::Spec:                    0
     File::Temp:                    0
     IO::File:                      0
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
+    version: 1.2

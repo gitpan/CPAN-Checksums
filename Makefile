@@ -1,7 +1,7 @@
 # This Makefile is for the CPAN::Checksums extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.30 (Revision: Revision: 4535 ) from the contents of
+# 6.36 (Revision: 32261) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
@@ -10,6 +10,7 @@
 #
 #   MakeMaker Parameters:
 
+#     LICENSE => q[perl]
 #     NAME => q[CPAN::Checksums]
 #     PREREQ_PM => { IO::File=>q[0], Compress::Zlib=>q[0], Compress::Bzip2=>q[0], File::Spec=>q[0], Data::Dumper=>q[0], Data::Compare=>q[0], File::Temp=>q[0], Digest::MD5=>q[0], Digest::SHA=>q[0], DirHandle=>q[0] }
 #     SIGN => q[1]
@@ -21,29 +22,29 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/local/perl-5.8.7/lib/5.8.7/i686-linux-64int/Config.pm)
+# These definitions are from config.sh (via /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5/i686-linux-64int/Config.pm)
 
 # They may have been overridden via Makefile.PL or on the command line
 AR = ar
 CC = cc
-CCCDLFLAGS = -fpic
+CCCDLFLAGS = -fPIC
 CCDLFLAGS = -Wl,-E
 DLEXT = so
 DLSRC = dl_dlopen.xs
+EXE_EXT = 
+FULL_AR = /usr/bin/ar
 LD = cc
-LDDLFLAGS = -shared -L/usr/local/lib
+LDDLFLAGS = -shared -g -L/usr/local/lib
 LDFLAGS =  -L/usr/local/lib
-LIBC = /lib/libc-2.3.2.so
+LIBC = /lib/libc-2.6.so
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.4.30
+OSVERS = 2.6.22-1-k7
 RANLIB = :
-SITELIBEXP = /usr/local/perl-5.8.7/lib/site_perl/5.8.7
-SITEARCHEXP = /usr/local/perl-5.8.7/lib/site_perl/5.8.7/i686-linux-64int
+SITELIBEXP = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/site_perl/5.9.5
+SITEARCHEXP = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/site_perl/5.9.5/i686-linux-64int
 SO = so
-EXE_EXT = 
-FULL_AR = /usr/bin/ar
 VENDORARCHEXP = 
 VENDORLIBEXP = 
 
@@ -54,11 +55,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = CPAN::Checksums
 NAME_SYM = CPAN_Checksums
-VERSION = 1.050
+VERSION = 1.061
 VERSION_MACRO = VERSION
-VERSION_SYM = 1_050
+VERSION_SYM = 1_061
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 1.050
+XS_VERSION = 1.061
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -72,51 +73,55 @@ MAN3EXT = 3
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
-PERLPREFIX = /usr/local/perl-5.8.7
-SITEPREFIX = /usr/local/perl-5.8.7
+PERLPREFIX = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680
+SITEPREFIX = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680
 VENDORPREFIX = 
-INSTALLPRIVLIB = /usr/local/perl-5.8.7/lib/5.8.7
+INSTALLPRIVLIB = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/local/perl-5.8.7/lib/site_perl/5.8.7
+INSTALLSITELIB = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/site_perl/5.9.5
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
 INSTALLVENDORLIB = 
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/local/perl-5.8.7/lib/5.8.7/i686-linux-64int
+INSTALLARCHLIB = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5/i686-linux-64int
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/local/perl-5.8.7/lib/site_perl/5.8.7/i686-linux-64int
+INSTALLSITEARCH = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/site_perl/5.9.5/i686-linux-64int
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
 INSTALLVENDORARCH = 
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
-INSTALLBIN = /usr/local/perl-5.8.7/bin
+INSTALLBIN = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
-INSTALLSITEBIN = /usr/local/perl-5.8.7/bin
+INSTALLSITEBIN = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
 INSTALLVENDORBIN = 
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
-INSTALLSCRIPT = /usr/local/perl-5.8.7/bin
+INSTALLSCRIPT = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
-INSTALLMAN1DIR = /usr/local/perl-5.8.7/man/man1
+INSTALLSITESCRIPT = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin
+DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
+INSTALLVENDORSCRIPT = 
+DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
+INSTALLMAN1DIR = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /usr/local/perl-5.8.7/man/man1
+INSTALLSITEMAN1DIR = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
 INSTALLVENDORMAN1DIR = 
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
-INSTALLMAN3DIR = /usr/local/perl-5.8.7/man/man3
+INSTALLMAN3DIR = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /usr/local/perl-5.8.7/man/man3
+INSTALLSITEMAN3DIR = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
 INSTALLVENDORMAN3DIR = 
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/local/perl-5.8.7/lib/5.8.7
-PERL_ARCHLIB = /usr/local/perl-5.8.7/lib/5.8.7/i686-linux-64int
+PERL_LIB = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5
+PERL_ARCHLIB = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5/i686-linux-64int
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/local/perl-5.8.7/lib/5.8.7/i686-linux-64int/CORE
-PERL = /usr/local/perl-5.8.7/bin/perl
-FULLPERL = /usr/local/perl-5.8.7/bin/perl
+PERL_INC = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5/i686-linux-64int/CORE
+PERL = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin/perl
+FULLPERL = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin/perl
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -128,14 +133,15 @@ PERL_CORE = 0
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/local/perl-5.8.7/lib/5.8.7/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.30
-MM_REVISION = Revision: 4535 
+MAKEMAKER   = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/lib/5.9.5/ExtUtils/MakeMaker.pm
+MM_VERSION  = 6.36
+MM_REVISION = 32261
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
+MAKE = make
 FULLEXT = CPAN/Checksums
 BASEEXT = Checksums
 PARENT_NAME = CPAN
@@ -181,13 +187,13 @@ PM_TO_BLIB = Checksums.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 1.50
+MM_Unix_VERSION = 1.54_01
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
 
 # --- MakeMaker tool_autosplit section:
 # Usage: $(AUTOSPLITFILE) FileToSplit AutoDirToSplitInto
-AUTOSPLITFILE = $(ABSPERLRUN)  -e 'use AutoSplit;  autosplit($$ARGV[0], $$ARGV[1], 0, 1, 1)'
+AUTOSPLITFILE = $(ABSPERLRUN)  -e 'use AutoSplit;  autosplit($$ARGV[0], $$ARGV[1], 0, 1, 1)' --
 
 
 
@@ -213,7 +219,7 @@ ECHO = echo
 ECHO_N = echo -n
 UNINST = 0
 VERBINST = 0
-MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e 'install({@ARGV}, '\''$(VERBINST)'\'', 0, '\''$(UNINST)'\'');'
+MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e 'install({@ARGV}, '\''$(VERBINST)'\'', 0, '\''$(UNINST)'\'');' --
 DOC_INSTALL = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e perllocal_install
 UNINSTALL = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e uninstall
 WARN_IF_OLD_PACKLIST = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e warn_if_old_packlist
@@ -244,7 +250,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = Makefile setversion README all chlog tardist
 DISTNAME = CPAN-Checksums
-DISTVNAME = CPAN-Checksums-1.050
+DISTVNAME = CPAN-Checksums-1.061
 
 
 # --- MakeMaker macro section:
@@ -397,7 +403,6 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	Checksums.pm \
 	Checksums.pm
 	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) \
 	  Checksums.pm $(INST_MAN3DIR)/CPAN::Checksums.$(MAN3EXT) 
@@ -413,17 +418,11 @@ manifypods : pure_all  \
 
 # --- MakeMaker subdirs section:
 
-# The default clean, realclean and test targets in this Makefile
-# have automatically been given entries for each subdir.
-
-
-subdirs ::
-	$(NOECHO) cd CPAN-Checksums-1.048 && $(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) all $(PASTHRU)
-
+# none
 
 # --- MakeMaker clean_subdirs section:
 clean_subdirs :
-	$(ABSPERLRUN)  -e 'chdir '\''CPAN-Checksums-1.048'\'';  system '\''$(MAKE) clean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';'
+	$(NOECHO) $(NOOP)
 
 
 # --- MakeMaker clean section:
@@ -443,10 +442,10 @@ clean :: clean_subdirs
 	  $(INST_ARCHAUTODIR)/extralibs.ld blibdirs.ts \
 	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
 	  core.*perl.*.? $(MAKE_APERL_FILE) \
-	  $(BASEEXT).def perl \
+	  perl $(BASEEXT).def \
 	  core.[0-9][0-9][0-9] mon.out \
-	  lib$(BASEEXT).def perl.exe \
-	  perlmain.c so_locations \
+	  lib$(BASEEXT).def perlmain.c \
+	  perl.exe so_locations \
 	  $(BASEEXT).exp 
 	- $(RM_RF) \
 	  blib 
@@ -455,8 +454,7 @@ clean :: clean_subdirs
 
 # --- MakeMaker realclean_subdirs section:
 realclean_subdirs :
-	- $(ABSPERLRUN)  -e 'chdir '\''CPAN-Checksums-1.048'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) realclean'\'' if -f '\''$(MAKEFILE_OLD)'\'';'
-	- $(ABSPERLRUN)  -e 'chdir '\''CPAN-Checksums-1.048'\'';  system '\''$(MAKE) $(USEMAKEFILE) $(FIRST_MAKEFILE) realclean'\'' if -f '\''$(FIRST_MAKEFILE)'\'';'
+	$(NOECHO) $(NOOP)
 
 
 # --- MakeMaker realclean section:
@@ -471,13 +469,14 @@ realclean purge ::  clean realclean_subdirs
 # --- MakeMaker metafile section:
 metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
-	$(NOECHO) $(ECHO) '# http://module-build.sourceforge.net/META-spec.html' > META_new.yml
-	$(NOECHO) $(ECHO) '#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#' >> META_new.yml
-	$(NOECHO) $(ECHO) 'name:         CPAN-Checksums' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version:      1.050' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version_from: Checksums.pm' >> META_new.yml
-	$(NOECHO) $(ECHO) 'installdirs:  site' >> META_new.yml
-	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
+	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
+	$(NOECHO) $(ECHO) 'name:                CPAN-Checksums' >> META_new.yml
+	$(NOECHO) $(ECHO) 'version:             1.061' >> META_new.yml
+	$(NOECHO) $(ECHO) 'abstract:            ~' >> META_new.yml
+	$(NOECHO) $(ECHO) 'license:             perl' >> META_new.yml
+	$(NOECHO) $(ECHO) 'generated_by:        ExtUtils::MakeMaker version 6.36' >> META_new.yml
+	$(NOECHO) $(ECHO) 'distribution_type:   module' >> META_new.yml
+	$(NOECHO) $(ECHO) 'requires:     ' >> META_new.yml
 	$(NOECHO) $(ECHO) '    Compress::Bzip2:               0' >> META_new.yml
 	$(NOECHO) $(ECHO) '    Compress::Zlib:                0' >> META_new.yml
 	$(NOECHO) $(ECHO) '    Data::Compare:                 0' >> META_new.yml
@@ -488,9 +487,9 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '    File::Spec:                    0' >> META_new.yml
 	$(NOECHO) $(ECHO) '    File::Temp:                    0' >> META_new.yml
 	$(NOECHO) $(ECHO) '    IO::File:                      0' >> META_new.yml
-	$(NOECHO) $(ECHO) '' >> META_new.yml
-	$(NOECHO) $(ECHO) 'distribution_type: module' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by: ExtUtils::MakeMaker version 6.30' >> META_new.yml
+	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
+	$(NOECHO) $(ECHO) '    url:     http://module-build.sourceforge.net/META-spec-v1.2.html' >> META_new.yml
+	$(NOECHO) $(ECHO) '    version: 1.2' >> META_new.yml
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 
 
@@ -513,7 +512,7 @@ manifest :
 	$(PERLRUN) "-MExtUtils::Manifest=mkmanifest" -e mkmanifest
 
 veryclean : realclean
-	$(RM_F) *~ *.orig */*~ */*.orig
+	$(RM_F) *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old 
 
 
 
@@ -521,7 +520,7 @@ veryclean : realclean
 
 dist : $(DIST_DEFAULT) $(FIRST_MAKEFILE)
 	$(NOECHO) $(ABSPERLRUN) -l -e 'print '\''Warning: Makefile possibly out of date with $(VERSION_FROM)'\''' \
-	  -e '    if -e '\''$(VERSION_FROM)'\'' and -M '\''$(VERSION_FROM)'\'' < -M '\''$(FIRST_MAKEFILE)'\'';'
+	  -e '    if -e '\''$(VERSION_FROM)'\'' and -M '\''$(VERSION_FROM)'\'' < -M '\''$(FIRST_MAKEFILE)'\'';' --
 
 tardist : $(DISTVNAME).tar$(SUFFIX)
 	$(NOECHO) $(NOOP)
@@ -584,14 +583,14 @@ ci :
 # --- MakeMaker distmeta section:
 distmeta : create_distdir metafile
 	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{META.yml} => q{Module meta-data (added by MakeMaker)}}) } ' \
-	  -e '    or print "Could not add META.yml to MANIFEST: $${'\''@'\''}\n"'
+	  -e '    or print "Could not add META.yml to MANIFEST: $${'\''@'\''}\n"' --
 
 
 
 # --- MakeMaker distsignature section:
 distsignature : create_distdir
 	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{SIGNATURE} => q{Public-key signature (added by MakeMaker)}}) } ' \
-	  -e '    or print "Could not add SIGNATURE to MANIFEST: $${'\''@'\''}\n"'
+	  -e '    or print "Could not add SIGNATURE to MANIFEST: $${'\''@'\''}\n"' --
 	$(NOECHO) cd $(DISTVNAME) && $(TOUCH) SIGNATURE
 	cd $(DISTVNAME) && cpansign -s
 
@@ -644,7 +643,7 @@ pure_site_install ::
 		$(INST_LIB) $(DESTINSTALLSITELIB) \
 		$(INST_ARCHLIB) $(DESTINSTALLSITEARCH) \
 		$(INST_BIN) $(DESTINSTALLSITEBIN) \
-		$(INST_SCRIPT) $(DESTINSTALLSCRIPT) \
+		$(INST_SCRIPT) $(DESTINSTALLSITESCRIPT) \
 		$(INST_MAN1DIR) $(DESTINSTALLSITEMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLSITEMAN3DIR)
 	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
@@ -657,7 +656,7 @@ pure_vendor_install ::
 		$(INST_LIB) $(DESTINSTALLVENDORLIB) \
 		$(INST_ARCHLIB) $(DESTINSTALLVENDORARCH) \
 		$(INST_BIN) $(DESTINSTALLVENDORBIN) \
-		$(INST_SCRIPT) $(DESTINSTALLSCRIPT) \
+		$(INST_SCRIPT) $(DESTINSTALLVENDORSCRIPT) \
 		$(INST_MAN1DIR) $(DESTINSTALLVENDORMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLVENDORMAN3DIR)
 
@@ -737,7 +736,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = /usr/local/perl-5.8.7/bin/perl
+FULLPERL      = /home/src/perl/repoperls/installed-perls/perl/pkmBCn5/perl-5.8.0@31680/bin/perl
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -745,7 +744,7 @@ $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 	$(NOECHO) $(ECHO) Writing \"$(MAKE_APERL_FILE)\" for this $(MAP_TARGET)
 	$(NOECHO) $(PERLRUNINST) \
-		Makefile.PL DIR=CPAN-Checksums-1.048 \
+		Makefile.PL DIR= \
 		MAKEFILE=$(MAKE_APERL_FILE) LINKTYPE=static \
 		MAKEAPERL=1 NORECURS=1 CCCDLFLAGS=
 
@@ -760,10 +759,11 @@ TESTDB_SW = -d
 
 testdb :: testdb_$(LINKTYPE)
 
-test :: $(TEST_TYPE)
-	$(NOECHO) $(ABSPERLRUN)  -e 'chdir '\''CPAN-Checksums-1.048'\'';  ' \
-	  -e 'system '\''$(MAKE) test $(PASTHRU)'\'' ' \
-	  -e '    if -f '\''$(FIRST_MAKEFILE)'\'';'
+test :: $(TEST_TYPE) subdirs-test
+
+subdirs-test ::
+	$(NOECHO) $(NOOP)
+
 
 test_dynamic :: pure_all
 	PERL_DL_NONLAZY=1 $(FULLPERLRUN) "-MExtUtils::Command::MM" "-e" "test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" $(TEST_FILES)
@@ -780,7 +780,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd:
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="1,050,0,0">' > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="1,061,0,0">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <TITLE>$(DISTNAME)</TITLE>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
@@ -796,7 +796,7 @@ ppd:
 	$(NOECHO) $(ECHO) '        <DEPENDENCY NAME="File-Temp" VERSION="0,0,0,0" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <DEPENDENCY NAME="IO-File" VERSION="0,0,0,0" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <OS NAME="$(OSNAME)" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i686-linux-64int" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i686-linux-64int-5.9" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
@@ -805,7 +805,7 @@ ppd:
 # --- MakeMaker pm_to_blib section:
 
 pm_to_blib : $(TO_INST_PM)
-	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', '\''$(PM_FILTER)'\'')' \
+	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', '\''$(PM_FILTER)'\'')' -- \
 	  Checksums.pm $(INST_LIB)/CPAN/Checksums.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 

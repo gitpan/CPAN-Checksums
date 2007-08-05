@@ -10,7 +10,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(updatedir);
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 50 $,4)/1000;
+our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 61 $,4)/1000;
 $CAUTION ||= 0;
 $TRY_SHORTNAME ||= 0;
 $SIGNING_PROGRAM ||= 'gpg --clearsign --default-key ';
@@ -29,13 +29,13 @@ use Data::Dumper ();
 use Data::Compare ();
 use Digest::SHA ();
 
-sub updatedir ($) {
-  my($dirname) = @_;
-  my $dref = {};
-  my(%shortnameseen,@p);
+sub _dir_to_dref {
+  my($dirname,$old_dref) = @_;
+  my($dref) = {};
   my($dh)= DirHandle->new;
   my($fh) = new IO::File;
   $dh->open($dirname) or die "Couldn't opendir $dirname\: $!";
+  my(%shortnameseen);
  DIRENT: for my $de ($dh->read) {
     next if $de =~ /^\./;
     next if substr($de,0,9) eq "CHECKSUMS";
@@ -53,6 +53,7 @@ sub updatedir ($) {
       my $suffix;
       ($suffix = $shortname) =~ s/.*\.//;
       substr($suffix,3) = "" if length($suffix) > 3;
+      my @p;
       if ($shortname =~ /\-/) {
         @p = $shortname =~ /(.{1,16})-.*?([\d\.]{2,8})/;
       } else {
@@ -102,43 +103,73 @@ sub updatedir ($) {
       $gmtime[4]++;
       $gmtime[5]+=1900;
       $dref->{$de}{mtime} = sprintf "%04d-%02d-%02d", @gmtime[5,4,3];
-
-      add_digests($de,$dref,"Digest::MD5",[],"md5",$fh,$abs);
-      add_digests($de,$dref,"Digest::SHA",[256],"sha256",$fh,$abs);
+      _add_digests($de,$dref,"Digest::SHA",[256],"sha256",$abs,$old_dref);
+      my $can_reuse_old_md5 = 1;
+    COMPARE: for my $param (qw(size mtime sha256)) {
+        if (!exists $old_dref->{$de}{$param} ||
+            $dref->{$de}{$param} ne $old_dref->{$de}{$param}) {
+          $can_reuse_old_md5 = 0;
+          last COMPARE;
+        }
+      }
+      if ( $can_reuse_old_md5 ) {
+        for my $param (qw(md5 md5-ungz md5-unbz2)) {
+          next unless exists $old_dref->{$de}{$param};
+          $dref->{$de}{$param} = $old_dref->{$de}{$param};
+        }
+      } else {
+        _add_digests($de,$dref,"Digest::MD5",[],"md5",$abs,$old_dref);
+      }
 
     } # ! -d
   }
   $dh->close;
+  $dref;
+}
+
+sub _read_old_ddump {
+  my($ckfn) = @_;
+  my $is_signed = 0;
+  my($fh) = new IO::File;
+  my $old_ddump = "";
+  if ($fh->open($ckfn)) {
+    local $/ = "\n";
+    while (<$fh>) {
+      next if /^\#/;
+      $is_signed = 1 if /SIGNED MESSAGE/;
+      $old_ddump .= $_;
+    }
+    close $fh;
+  }
+  return($old_ddump,$is_signed);
+}
+
+sub updatedir ($) {
+  my($dirname) = @_;
   my $ckfn = File::Spec->catfile($dirname, "CHECKSUMS"); # checksum-file-name
+  my($old_ddump,$is_signed) = _read_old_ddump($ckfn);
+  my($old_dref) = makehashref($old_ddump);
+  my $dref = _dir_to_dref($dirname,$old_dref);
   unless (%$dref) { # no files to checksum
-    unlink $ckfn or die "Couldn't unlink $ckfn: $!" if -f $ckfn;
+    unlink $ckfn or die "Couldn't unlink '$ckfn': $!" if -f $ckfn;
     return 1;
   }
   local $Data::Dumper::Indent = 1;
   local $Data::Dumper::Quotekeys = 1;
   local $Data::Dumper::Sortkeys = 1;
   my $ddump = Data::Dumper->new([$dref],["cksum"])->Dump;
-  my $is_signed = 0;
   my @ckfnstat = stat $ckfn;
-  if ($fh->open($ckfn)) {
-    my $cksum = "";
-    local $/ = "\n";
-    while (<$fh>) {
-      next if /^\#/;
-      $is_signed = 1 if /SIGNED MESSAGE/;
-      $cksum .= $_;
-    }
-    close $fh;
+  if ($old_ddump) {
     local our $DIRNAME = $dirname;
     if ( !!$SIGNING_KEY == !!$is_signed ) { # either both or neither
       if (!$MIN_MTIME_CHECKSUMS || $ckfnstat[9] > $MIN_MTIME_CHECKSUMS ) {
         # recent enough
-        return 1 if $cksum eq $ddump;
-        return 1 if ckcmp($cksum,$dref);
+        return 1 if $old_ddump eq $ddump;
+        return 1 if ckcmp($old_dref,$dref);
       }
     }
     if ($CAUTION) {
-      my $report = investigate($cksum,$dref);
+      my $report = investigate($old_dref,$dref);
       warn $report if $report;
     }
   }
@@ -149,6 +180,7 @@ sub updatedir ($) {
                           ) or die;
   my $tckfn = $ft->filename;
   close $ft;
+  my($fh) = new IO::File;
   open $fh, ">$tckfn\0" or die "Couldn't open >$tckfn\: $!";
 
   local $\;
@@ -177,8 +209,9 @@ Writing to $tckfn directly";
   return 2;
 }
 
-sub add_digests ($$$$$$$) {
-  my($de,$dref,$module,$constructor_args,$keyname,$fh,$abs) = @_;
+sub _add_digests ($$$$$$$) {
+  my($de,$dref,$module,$constructor_args,$keyname,$abs,$old_dref) = @_;
+  my($fh) = new IO::File;
   my $dig = $module->new(@$constructor_args);
   $fh->open("$abs\0") or die "Couldn't open $abs: $!";
   $dig->addfile($fh);
@@ -188,6 +221,13 @@ sub add_digests ($$$$$$$) {
   $dig = $module->new(@$constructor_args);
   if ($de =~ /\.gz$/) {
     my($buffer, $zip);
+    if (exists $old_dref->{$de}{$keyname} &&
+        $dref->{$de}{$keyname} eq $old_dref->{$de}{$keyname} &&
+        exists $old_dref->{$de}{"$keyname-ungz"}
+       ) {
+      $dref->{$de}{"$keyname-ungz"} = $old_dref->{$de}{"$keyname-ungz"};
+      return;
+    }
     if ($zip  = Compress::Zlib::gzopen($abs, "rb")) {
       $dig->add($buffer)
           while $zip->gzread($buffer) > 0;
@@ -196,6 +236,13 @@ sub add_digests ($$$$$$$) {
     }
   } elsif ($de =~ /\.bz2$/) {
     my($buffer, $zip);
+    if (exists $old_dref->{$de}{$keyname} &&
+        $dref->{$de}{$keyname} eq $old_dref->{$de}{$keyname} &&
+        exists $old_dref->{$de}{"$keyname-unbz2"}
+       ) {
+      $dref->{$de}{"$keyname-unbz2"} = $old_dref->{$de}{"$keyname-unbz2"};
+      return;
+    }
     if ($zip  = Compress::Bzip2::bzopen($abs, "rb")) {
       $dig->add($buffer)
           while $zip->bzread($buffer) > 0;
@@ -258,7 +305,7 @@ __END__
 
 =head1 NAME
 
-CPAN::Checksums - Write a CHECKSUMS file for a directory as on CPAN
+CPAN::Checksums - Write a C<CHECKSUMS> file for a directory as on CPAN
 
 =head1 SYNOPSIS
 
@@ -275,11 +322,17 @@ $TRY_SHORTNAME to a true value.
 
 =head1 DESCRIPTION
 
-updatedir takes a directory name as argument and writes a typical
-CHECKSUMS file in that directory as used on CPAN unless a previously
-written CHECKSUMS file is there that is still valid. Returns 2 if a
-new CHECKSUMS file has been written, 1 if a valid CHECKSUMS file is
+=over 2
+
+=item $success = updatedir($dir)
+
+C<updatedir()> takes a directory name as argument and writes a typical
+C<CHECKSUMS> file in that directory as used on CPAN unless a previously
+written C<CHECKSUMS> file is there that is still valid. Returns 2 if a
+new C<CHECKSUMS> file has been written, 1 if a valid C<CHECKSUMS> file is
 already there, otherwise dies.
+
+=back
 
 =head2 Global Variables in package CPAN::Checksums
 
@@ -289,7 +342,7 @@ already there, otherwise dies.
 
 If the global variable $IGNORE_MATCH is set, then all files matching
 this expression will be completely ignored and will not be included in
-the CPAN CHECKSUMS files. Per default this variable is set to
+the CPAN C<CHECKSUMS> files. Per default this variable is set to
 
     qr{(?i-xsm:readme$)}
 
@@ -310,10 +363,10 @@ taken and then give up.
 
 =item $SIGNING_KEY
 
-Setting the global variable $SIGNING_KEY makes the generated CHECKSUMS
+Setting the global variable $SIGNING_KEY makes the generated C<CHECKSUMS>
 file to be clear-signed by the command specified in $SIGNING_PROGRAM
 (defaults to C<gpg --clearsign --default-key >), passing the signing
-key as an extra argument.  The resulting CHECKSUMS file should look like:
+key as an extra argument.  The resulting C<CHECKSUMS> file should look like:
 
     0&&<<''; # this PGP-signed message is also valid perl
     -----BEGIN PGP SIGNED MESSAGE-----
@@ -348,12 +401,19 @@ Compress::Zlib, File::Spec, Data::Dumper, Data::Compare, File::Temp
 =head1 BUGS
 
 If updatedir is interrupted, it may leave a temporary file lying
-around. These files have the File::Temp template CHECKSUMS.XXXX and
+around. These files have the File::Temp template C<CHECKSUMS.XXXX> and
 should be harvested by a cronjob.
 
 =head1 AUTHOR
 
 Andreas Koenig, andreas.koenig@anima.de; GnuPG support by Autrijus Tang
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See L<http://www.perl.com/perl/misc/Artistic.html>
 
 =head1 SEE ALSO
 

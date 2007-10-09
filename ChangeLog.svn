@@ -1,4 +1,27 @@
 ------------------------------------------------------------------------
+r64 | k | 2007-10-09 05:05:55 +0200 (Tue, 09 Oct 2007) | 1 line
+Changed paths:
+   M /trunk/Checksums.pm
+
+Property set for release after_63
+------------------------------------------------------------------------
+r63 | k | 2007-10-09 05:05:52 +0200 (Tue, 09 Oct 2007) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+
+prepare release
+------------------------------------------------------------------------
+r62 | k | 2007-10-09 04:58:37 +0200 (Tue, 09 Oct 2007) | 1 line
+Changed paths:
+   D /trunk/ChangeLog.svn
+   M /trunk/Checksums.pm
+   M /trunk/MANIFEST
+   M /trunk/MANIFEST.SKIP
+   M /trunk/Makefile.PL
+   M /trunk/t/CHECKSUMS
+
+make 5.005 compatible
+------------------------------------------------------------------------
 r61 | k | 2007-08-05 14:08:28 +0200 (Sun, 05 Aug 2007) | 1 line
 Changed paths:
    M /trunk/Checksums.pm

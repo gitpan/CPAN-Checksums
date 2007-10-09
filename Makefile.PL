@@ -1,6 +1,5 @@
 use ExtUtils::MakeMaker qw(:DEFAULT);
 my $Id = q$Id: Makefile.PL 3 2005-10-30 13:58:32Z k $;
-our $VERSION = sprintf "%.3f", 1 + substr(q$Rev: 54 $,4)/1000;
 
 my $version_diff = 0; # we'll have to die if this becomes true
 {
@@ -94,7 +93,9 @@ sub MY::postamble {
 setversion:
 	$(PERL) Makefile.PL --setversion
 
-README: Checksums.pm Makefile
+Makefile : Checksums.pm
+
+README: Makefile
 	$(PERL) -MPod::Text -e 'Pod::Text->new->parse_from_file(\*ARGV)' Checksums.pm > $@
 
 chlog ::

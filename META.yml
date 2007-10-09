@@ -1,9 +1,9 @@
 --- #YAML:1.0
 name:                CPAN-Checksums
-version:             1.061
+version:             1.064
 abstract:            ~
 license:             perl
-generated_by:        ExtUtils::MakeMaker version 6.36
+generated_by:        ExtUtils::MakeMaker version 6.3601
 distribution_type:   module
 requires:     
     Compress::Bzip2:               0

@@ -1,4 +1,76 @@
 ------------------------------------------------------------------------
+r74 | k | 2008-05-17 07:21:04 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   M /trunk/t/CHECKSUMS
+
+prepare a new release
+------------------------------------------------------------------------
+r73 | k | 2008-05-17 07:20:49 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+   M /trunk/t/CHECKSUMS
+
+prepare a new release
+------------------------------------------------------------------------
+r72 | k | 2008-05-17 07:18:39 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+
+prepare a new release
+------------------------------------------------------------------------
+r71 | k | 2008-05-17 07:17:21 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+
+prepare a new release
+------------------------------------------------------------------------
+r70 | k | 2008-05-17 07:16:46 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   A /trunk/Changes
+   M /trunk/Makefile.PL
+   M /trunk/lib/CPAN/Checksums.pm
+   M /trunk/t/CHECKSUMS
+
+prepare a new release
+------------------------------------------------------------------------
+r69 | k | 2008-05-16 23:28:44 +0200 (Fri, 16 May 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+   M /trunk/t/CHECKSUMS
+
+ready for the next release
+------------------------------------------------------------------------
+r68 | k | 2008-05-16 23:09:30 +0200 (Fri, 16 May 2008) | 1 line
+Changed paths:
+   D /trunk/Checksums.pm
+   A /trunk/lib/CPAN/Checksums.pm (from /trunk/Checksums.pm:67)
+
+actually mv the file Checksums.pm to lib/CPAN
+------------------------------------------------------------------------
+r67 | k | 2008-05-16 23:08:59 +0200 (Fri, 16 May 2008) | 1 line
+Changed paths:
+   M /trunk/Checksums.pm
+   M /trunk/MANIFEST
+   M /trunk/Makefile.PL
+   A /trunk/lib
+   A /trunk/lib/CPAN
+   M /trunk/t/CHECKSUMS
+   M /trunk/t/updatedir.t
+
+prepare for a move of the file Checksums.pm to lib/CPAN
+------------------------------------------------------------------------
+r66 | k | 2008-05-16 06:05:26 +0200 (Fri, 16 May 2008) | 1 line
+Changed paths:
+   M /trunk/t/CHECKSUMS
+
+automatic side effect of last testrun
+------------------------------------------------------------------------
+r65 | k | 2008-05-16 06:04:48 +0200 (Fri, 16 May 2008) | 1 line
+Changed paths:
+   M /trunk/t/updatedir.t
+
+eliminate forward slashes from test
+------------------------------------------------------------------------
 r64 | k | 2007-10-09 05:05:55 +0200 (Tue, 09 Oct 2007) | 1 line
 Changed paths:
    M /trunk/Checksums.pm

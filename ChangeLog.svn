@@ -1,4 +1,34 @@
 ------------------------------------------------------------------------
+r79 | k | 2008-09-03 21:32:56 +0200 (Wed, 03 Sep 2008) | 1 line
+Changed paths:
+   M /trunk/Changes
+
+prepare a release
+------------------------------------------------------------------------
+r78 | k | 2008-09-03 21:32:01 +0200 (Wed, 03 Sep 2008) | 1 line
+Changed paths:
+   M /trunk/lib/CPAN/Checksums.pm
+
+prepare a release
+------------------------------------------------------------------------
+r77 | k | 2008-09-03 21:31:03 +0200 (Wed, 03 Sep 2008) | 1 line
+Changed paths:
+   M /trunk/lib/CPAN/Checksums.pm
+
+add missing binmode() for Windows (courtesy Elliot Shank)
+------------------------------------------------------------------------
+r76 | k | 2008-09-03 21:30:11 +0200 (Wed, 03 Sep 2008) | 1 line
+Changed paths:
+   M /trunk/t/CHECKSUMS
+
+autogen
+------------------------------------------------------------------------
+r75 | k | 2008-05-17 07:22:02 +0200 (Sat, 17 May 2008) | 1 line
+Changed paths:
+   D /trunk/META.yml
+
+prepare a new release
+------------------------------------------------------------------------
 r74 | k | 2008-05-17 07:21:04 +0200 (Sat, 17 May 2008) | 1 line
 Changed paths:
    M /trunk/t/CHECKSUMS

@@ -1,4 +1,29 @@
 ------------------------------------------------------------------------
+r83 | k | 2008-10-31 07:52:59 +0100 (Fri, 31 Oct 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+
+prepare next release
+------------------------------------------------------------------------
+r82 | k | 2008-10-31 07:51:43 +0100 (Fri, 31 Oct 2008) | 1 line
+Changed paths:
+   M /trunk/Changes
+   M /trunk/t/CHECKSUMS
+
+prepare next release
+------------------------------------------------------------------------
+r81 | k | 2008-10-31 05:52:36 +0100 (Fri, 31 Oct 2008) | 1 line
+Changed paths:
+   M /trunk/Makefile.PL
+
+up some version numbers on rereqs just to be on the safe side
+------------------------------------------------------------------------
+r80 | k | 2008-10-31 05:52:00 +0100 (Fri, 31 Oct 2008) | 1 line
+Changed paths:
+   M /trunk/lib/CPAN/Checksums.pm
+
+call binmode as a function not a method
+------------------------------------------------------------------------
 r79 | k | 2008-09-03 21:32:56 +0200 (Wed, 03 Sep 2008) | 1 line
 Changed paths:
    M /trunk/Changes

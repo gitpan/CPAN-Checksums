@@ -1,4 +1,12 @@
 ------------------------------------------------------------------------
+r87 | k | 2010-01-23 06:35:54 +0100 (Sat, 23 Jan 2010) | 1 line
+Changed paths:
+   M /trunk/Changes
+   M /trunk/lib/CPAN/Checksums.pm
+   M /trunk/t/updatedir.t
+
+remove a test that relies on the number of blocks a file occupies
+------------------------------------------------------------------------
 r86 | k | 2009-09-28 06:07:17 +0200 (Mon, 28 Sep 2009) | 1 line
 Changed paths:
    M /trunk/Changes

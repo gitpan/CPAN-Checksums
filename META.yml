@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               CPAN-Checksums
-version:            2.06
+version:            2.07
 abstract:           ~
 author:  []
 license:            perl
@@ -10,21 +10,22 @@ configure_requires:
 build_requires:
     ExtUtils::MakeMaker:  0
 requires:
-    Compress::Bzip2:  0
-    Compress::Zlib:   0
-    Data::Compare:    0
-    Data::Dumper:     0
-    Digest::MD5:      2.36
-    Digest::SHA:      0
-    DirHandle:        0
-    File::Spec:       0
-    File::Temp:       0
-    IO::File:         1.14
+    Compress::Bzip2:    0
+    Compress::Zlib:     0
+    Data::Compare:      0
+    Data::Dumper:       0
+    Digest::MD5:        2.36
+    Digest::SHA:        0
+    DirHandle:          0
+    File::Spec:         0
+    File::Temp:         0
+    IO::File:           1.14
+    Module::Signature:  0
 no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.5706
+generated_by:       ExtUtils::MakeMaker version 6.5705
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

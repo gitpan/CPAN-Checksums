@@ -1,31 +1,32 @@
---- #YAML:1.0
-name:               CPAN-Checksums
-version:            2.07
-abstract:           ~
-author:  []
-license:            perl
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+---
+abstract: unknown
+author:
+  - unknown
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    Compress::Bzip2:    0
-    Compress::Zlib:     0
-    Data::Compare:      0
-    Data::Dumper:       0
-    Digest::MD5:        2.36
-    Digest::SHA:        0
-    DirHandle:          0
-    File::Spec:         0
-    File::Temp:         0
-    IO::File:           1.14
-    Module::Signature:  0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.5705
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.59, CPAN::Meta::Converter version 2.112150'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: CPAN-Checksums
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Compress::Bzip2: 0
+  Compress::Zlib: 0
+  Data::Compare: 0
+  Data::Dumper: 0
+  Digest::MD5: 2.36
+  Digest::SHA: 0
+  DirHandle: 0
+  File::Spec: 0
+  File::Temp: 0
+  IO::File: 1.14
+  Module::Signature: 0
+version: 2.08

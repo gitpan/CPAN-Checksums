@@ -3,30 +3,30 @@ abstract: unknown
 author:
   - unknown
 build_requires:
-  ExtUtils::MakeMaker: 0
+  ExtUtils::MakeMaker: '0'
 configure_requires:
-  ExtUtils::MakeMaker: 0
+  ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.59, CPAN::Meta::Converter version 2.112150'
+generated_by: 'ExtUtils::MakeMaker version 6.94, CPAN::Meta::Converter version 2.140640'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: CPAN-Checksums
 no_index:
   directory:
     - t
     - inc
 requires:
-  Compress::Bzip2: 0
-  Compress::Zlib: 0
-  Data::Compare: 0
-  Data::Dumper: 0
-  Digest::MD5: 2.36
-  Digest::SHA: 0
-  DirHandle: 0
-  File::Spec: 0
-  File::Temp: 0
-  IO::File: 1.14
-  Module::Signature: 0
-version: 2.08
+  Compress::Bzip2: '0'
+  Compress::Zlib: '0'
+  Data::Compare: '0'
+  Data::Dumper: '0'
+  Digest::MD5: '2.36'
+  Digest::SHA: '0'
+  DirHandle: '0'
+  File::Spec: '0'
+  File::Temp: '0'
+  IO::File: '1.14'
+  Module::Signature: '0'
+version: '2.09'

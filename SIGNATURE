@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.68.
+signed via the Module::Signature module, version 0.73.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -16,13 +16,13 @@ Hash: SHA1
 
 SHA1 6587f782cbd9cb71036f2e2492ca3daa389521c3 MANIFEST
 SHA1 1c21142a9af69d1da5c027b924b8b0c052beb1da MANIFEST.SKIP
-SHA1 7faea96c2f741328c696fe04e9bcc8fe41a61499 META.json
-SHA1 ae1ec5a6c499264b265a45d2471cbba867758196 META.yml
-SHA1 98d4acdec8e5b42574f8f32f453c0c0933fa569f Makefile.PL
+SHA1 d673ad3f62d4b90533e419a504a8b8bf7b772a08 META.json
+SHA1 35cb8c2c8862fbf5a7b097ac0e068348055eddc3 META.yml
+SHA1 58f66d3bd64cc31aa4463a190f344a9b02d49e1e Makefile.PL
 SHA1 378ba4b97d5a989790877de0214ca23ac5aeef37 README
 SHA1 b929ff9f01730419548cab2dfcc30003b49fbbfb Todo
-SHA1 b8158703f7dbb962c56a07183b375a766951e4f1 lib/CPAN/Checksums.pm
-SHA1 8091e870af6f081607bab636ab1e8fcfa18b12be t/00signature.t
+SHA1 e70fc3d8628fda9a263d3fd3942e5801f3bfc86c lib/CPAN/Checksums.pm
+SHA1 89bb8f97f25483d5f618e6a63d2a4361ed0bb84c t/00signature.t
 SHA1 51e1c061bc02e9a38948a5d8e3ca7352830f0fac t/42.gz
 SHA1 23e182506f4b883d8aae3d29d08e044c55b04deb t/43
 SHA1 0d942b3ef6791694fde4693d3329a0ff924cb583 t/44.bz2
@@ -31,9 +31,9 @@ SHA1 2d74a36030efca3a42026e2ceab6837c052e8a53 t/CHECKSUMS
 SHA1 6a79f15a10337bd3450604abf39d4462df2a550b t/pod.t
 SHA1 3a73818d40fce12a21bf9d4d2c38ee2145cc0628 t/updatedir.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1
 
-iEYEARECAAYFAk5cg3wACgkQ7IA58KMXwV0uzQCfc/vBboe7anyS25qj+zBglXSv
-gJkAn2f3uvbHfXjdSN/XXNvss5YLH1Yc
-=snWE
+iEYEARECAAYFAlM+LwwACgkQ7IA58KMXwV3HJACg+h8/T+uLFzTF7fTgDqmfKKkf
+eyUAn2uYLpGTPOUogEnEBU0SHlBz67lR
+=PzZX
 -----END PGP SIGNATURE-----

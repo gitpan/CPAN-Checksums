@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.59, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "ExtUtils::MakeMaker version 6.94, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "perl_5"
    ],
@@ -22,30 +22,30 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : 0
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : 0
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "runtime" : {
          "requires" : {
-            "Compress::Bzip2" : 0,
-            "Compress::Zlib" : 0,
-            "Data::Compare" : 0,
-            "Data::Dumper" : 0,
+            "Compress::Bzip2" : "0",
+            "Compress::Zlib" : "0",
+            "Data::Compare" : "0",
+            "Data::Dumper" : "0",
             "Digest::MD5" : "2.36",
-            "Digest::SHA" : 0,
-            "DirHandle" : 0,
-            "File::Spec" : 0,
-            "File::Temp" : 0,
+            "Digest::SHA" : "0",
+            "DirHandle" : "0",
+            "File::Spec" : "0",
+            "File::Temp" : "0",
             "IO::File" : "1.14",
-            "Module::Signature" : 0
+            "Module::Signature" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "2.08"
+   "version" : "2.09"
 }
